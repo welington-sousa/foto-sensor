@@ -1,8 +1,18 @@
 package br.com.faculdade.fotosensor;
 
-public class FramePrincipal {
+import javax.swing.JFrame;
 
-	public static void main(String[] args) {
+/**
+ * @author welington sousa
+ */
+public class FramePrincipal extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Inicia a aplicação
+	 */
+	public static void main(String... args) {
 
 	}
 
