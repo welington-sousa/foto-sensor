@@ -3,6 +3,11 @@ package br.com.faculdade.fotosensor;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 
 /**
  * @author welington sousa
@@ -10,6 +15,11 @@ import javax.swing.JFrame;
 public class FramePrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	private static Webcam webcam = Webcam.getDefault();
+	private WebcamPanel panel = new WebcamPanel(webcam);
+
+	private JPanel painelPrincipal;
 
 	/**
 	 * Inicia a aplicação
@@ -29,6 +39,19 @@ public class FramePrincipal extends JFrame {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Cria o frame
+	 */
+	public FramePrincipal() {
+		setResizable(false);
+		setAlwaysOnTop(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 163, 70);
+		painelPrincipal = new JPanel();
+		painelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(painelPrincipal);
 	}
 
 }
