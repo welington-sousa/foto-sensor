@@ -1,5 +1,7 @@
 package br.com.faculdade.fotosensor;
 
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 
 /**
@@ -14,6 +16,19 @@ public class FramePrincipal extends JFrame {
 	 */
 	public static void main(String... args) {
 
+		// ensina como a Thread deve executar
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					FramePrincipal frame = new FramePrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 }
