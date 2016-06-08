@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -70,15 +72,19 @@ public class FramePrincipal extends JFrame {
 		setContentPane(painelPrincipal);
 
 		JButton botaoCapturar = new JButton("Capturar");
-		botaoCapturar.addActionListener((evento) -> { // lambda do java8
-			// trata o evento
-			try {
-				capturaImagem();
-				gravaTextoImagem();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} catch (ParseException e1) {
-				e1.printStackTrace();
+		botaoCapturar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// trata o evento
+				try {
+					capturaImagem();
+					gravaTextoImagem();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
