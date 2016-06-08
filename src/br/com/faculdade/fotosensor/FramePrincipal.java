@@ -88,6 +88,16 @@ public class FramePrincipal extends JFrame {
 				}
 			}
 
+			// cria a tarja
+			@SuppressWarnings("unused")
+			public Graphics2D criaTarja(int x, String velocidade, String dataEHora) {
+				BufferedImage bi = new BufferedImage(x, 30, BufferedImage.TYPE_INT_RGB);
+
+				Graphics2D g = bi.createGraphics();
+				g.fillRect(0, 0, bi.getWidth(), 40);
+				return g;
+			}
+
 			// escreve na imagem
 			private void gravaTextoImagem() throws IOException, ParseException {
 
