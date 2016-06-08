@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +13,11 @@ import java.time.format.DateTimeFormatter;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.bridj.ann.Alignment;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -73,69 +70,15 @@ public class FramePrincipal extends JFrame {
 		setContentPane(painelPrincipal);
 
 		JButton botaoCapturar = new JButton("Capturar");
-		botaoCapturar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// trata o evento
-				try {
-					capturaImagem();
-					gravaTextoImagem();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-			}
-
-			// cria a tarja
-			@SuppressWarnings("unused")
-			public Graphics2D criaTarja(int x, String velocidade, String dataEHora) {
-				BufferedImage bi = new BufferedImage(x, 30, BufferedImage.TYPE_INT_RGB);
-
-				Graphics2D g = bi.createGraphics();
-				g.fillRect(0, 0, bi.getWidth(), 40);
-				return g;
-			}
-
-			// escreve na imagem
-			private void gravaTextoImagem() throws IOException, ParseException {
-
-				// Hora atual
-				LocalDateTime agora = LocalDateTime.now();
-				String dataEHora = agora.format(DateTimeFormatter.ofPattern("hh:mm:ss"));
-
-				// Velocidade atual
-				double max = Math.random() * 100;
-				long i = Math.round(max);
-				String velocidade = String.valueOf(i);
-
-				BufferedImage imagem = webcam.getImage();
-
-				BufferedImage bi = new BufferedImage(imagem.getWidth(), 30, BufferedImage.TYPE_INT_RGB);
-
-				Graphics2D g = bi.createGraphics();
-				g.setColor(Color.BLACK);
-				g.fillRect(0, 0, bi.getWidth(), 40);
-				g.setColor(Color.WHITE);
-				g.setFont(new Font("Arial", Font.BOLD, 12));
-				g.drawString("Rua: " + "Avenida Mister Hull", bi.getWidth() - 625, 30);
-				g.drawString("Velocidade: " + velocidade + " Km/h", bi.getWidth() - 625, 15);
-				g.drawString("Hora: " + dataEHora, bi.getWidth() - 125, 20);
-
-				BufferedImage bufferTotal = new BufferedImage(imagem.getWidth(), imagem.getHeight() + 40,
-						BufferedImage.TYPE_INT_RGB);
-				Graphics2D grapTotal = bufferTotal.createGraphics();
-				grapTotal.drawImage(imagem, 0, 0, null);
-				grapTotal.drawImage(bi, 0, imagem.getHeight(), null);
-
-				ImageIO.write(bufferTotal, "PNG", new File("foto.png"));
-			}
-
-			// captura a imagem
-			private void capturaImagem() throws IOException {
-				BufferedImage imagem = webcam.getImage();
-				ImageIO.write(imagem, "PNG", new File("foto.png"));
+		botaoCapturar.addActionListener((evento) -> { // lambda do java8
+			// trata o evento
+			try {
+				capturaImagem();
+				gravaTextoImagem();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (ParseException e1) {
+				e1.printStackTrace();
 			}
 		});
 
@@ -153,6 +96,55 @@ public class FramePrincipal extends JFrame {
 		painelPrincipal.setLayout(contentLayout);
 
 		iniciaWebCam();
+	}
+
+	// cria a tarja
+	public static Graphics2D criaTarja(int x, String velocidade, String dataEHora) {
+		BufferedImage bi = new BufferedImage(x, 30, BufferedImage.TYPE_INT_RGB);
+
+		Graphics2D g = bi.createGraphics();
+		g.fillRect(0, 0, bi.getWidth(), 40);
+		return g;
+	}
+
+	// escreve na imagem
+	private void gravaTextoImagem() throws IOException, ParseException {
+
+		// Hora atual
+		LocalDateTime agora = LocalDateTime.now();
+		String dataEHora = agora.format(DateTimeFormatter.ofPattern("hh:mm:ss"));
+
+		// Velocidade atual
+		double max = Math.random() * 100;
+		long i = Math.round(max);
+		String velocidade = String.valueOf(i);
+
+		BufferedImage imagem = webcam.getImage();
+
+		BufferedImage bi = new BufferedImage(imagem.getWidth(), 30, BufferedImage.TYPE_INT_RGB);
+
+		Graphics2D g = bi.createGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, bi.getWidth(), 40);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Arial", Font.BOLD, 12));
+		g.drawString("Rua: " + "Avenida Mister Hull", bi.getWidth() - 625, 30);
+		g.drawString("Velocidade: " + velocidade + " Km/h", bi.getWidth() - 625, 15);
+		g.drawString("Hora: " + dataEHora, bi.getWidth() - 125, 20);
+
+		BufferedImage bufferTotal = new BufferedImage(imagem.getWidth(), imagem.getHeight() + 40,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D grapTotal = bufferTotal.createGraphics();
+		grapTotal.drawImage(imagem, 0, 0, null);
+		grapTotal.drawImage(bi, 0, imagem.getHeight(), null);
+
+		ImageIO.write(bufferTotal, "PNG", new File("foto.png"));
+	}
+
+	// captura a imagem
+	private void capturaImagem() throws IOException {
+		BufferedImage imagem = webcam.getImage();
+		ImageIO.write(imagem, "PNG", new File("foto.png"));
 	}
 
 	/**
