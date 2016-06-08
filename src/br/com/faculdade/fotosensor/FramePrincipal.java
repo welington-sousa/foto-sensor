@@ -52,6 +52,21 @@ public class FramePrincipal extends JFrame {
 		painelPrincipal = new JPanel();
 		painelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(painelPrincipal);
+
+		iniciaWebCam();
+	}
+
+	/**
+	 * Inicia a webcam
+	 */
+	private void iniciaWebCam() {
+		JFrame janela = new JFrame("Camera");
+		janela.getContentPane().add(panel);
+		janela.setResizable(false);
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.pack();
+		janela.setSize(540, 540);
+		janela.setVisible(true);
 	}
 
 }
